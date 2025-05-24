@@ -1,0 +1,41 @@
+# Node modules (huge library folder)
+node_modules/
+
+# Build output
+dist/
+out-tsc/
+
+# Environment files (optional)
+*.env
+*.local
+
+# IDE and editor folders
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Angular cache (optional)
+.angular/cache/
+
+# Optional: Coverage reports from tests
+coverage/
+
+# Optional: Compiled files
+*.js
+*.js.map
+
+# Optional: Binaries or archives
+*.tgz
+*.zip
+
+# Optional: Custom build folders (if used)
+build/
+tmp/
