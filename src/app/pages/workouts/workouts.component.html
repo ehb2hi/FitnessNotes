@@ -1,1 +1,27 @@
-<p>workouts works!</p>
+<h2>Add Workout</h2>
+
+<label for="exercise">Exercise:</label>
+<select [(ngModel)]="selectedExercise" id="exercise">
+  <option *ngFor="let ex of exercises" [value]="ex">{{ ex }}</option>
+</select>
+
+<div *ngFor="let set of sets; let i = index">
+  <p>Set {{ i + 1 }}</p>
+  <label>Weight (kg):</label>
+  <input type="number" [(ngModel)]="set.weight" />
+  <label>Reps:</label>
+  <input type="number" [(ngModel)]="set.reps" />
+</div>
+
+<div>
+  <label for="machineNumber">Machine #:</label>
+  <input id="machineNumber" type="text" [(ngModel)]="machineNumber" />
+</div>
+
+<div>
+  <label for="machineImage">Machine Image URL:</label>
+  <input id="machineImage" type="text" [(ngModel)]="machineImage" placeholder="https://..." />
+</div>
+
+<button (click)="addSet()">Add Set</button>
+<button (click)="saveWorkout()">Save Workout</button>

@@ -5,6 +5,8 @@ export interface SetEntry {
 
 export interface WorkoutEntry {
   exercise: string;
+  machineNumber?: string;   // Optional field
+  machineImage?: string;    // Optional: URL or base64 image string
   sets: SetEntry[];
-  date: string; // ISO string for simplicity
+  date: string;
 }
