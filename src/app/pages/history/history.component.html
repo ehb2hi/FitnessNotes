@@ -1,1 +1,23 @@
-<p>history works!</p>
+<h2>Workout History</h2>
+
+<div *ngIf="workouts.length === 0">
+  <p>No workouts yet. Go to "Workouts" to add some.</p>
+</div>
+
+<div *ngFor="let workout of workouts">
+  <h3>{{ workout.exercise }}</h3>
+  <p><strong>Date:</strong> {{ workout.date | date:'medium' }}</p>
+  <p><strong>Machine #:</strong> {{ workout.machineNumber || 'N/A' }}</p>
+
+  <div *ngIf="workout.machineImage">
+    <img [src]="workout.machineImage" alt="Machine image" width="200" />
+  </div>
+
+  <ul>
+    <li *ngFor="let set of workout.sets; let i = index">
+      Set {{ i + 1 }} – {{ set.weight }} kg × {{ set.reps }} reps
+    </li>
+  </ul>
+
+  <hr />
+</div>
