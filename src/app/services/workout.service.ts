@@ -23,4 +23,10 @@ export class WorkoutService {
   getEntriesByExercise(exercise: string): WorkoutEntry[] {
     return this.getAllEntries().filter(e => e.exercise === exercise);
   }
+
+  deleteEntry(index: number): void {
+    const all = this.getAllEntries();
+    all.splice(index, 1); // Remove 1 item at the given index
+    localStorage.setItem(this.storageKey, JSON.stringify(all));
+  }
 }
