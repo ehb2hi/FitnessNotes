@@ -5,14 +5,15 @@
   <option *ngFor="let ex of exercises" [value]="ex">{{ ex }}</option>
 </select>
 
+<div *ngIf="workoutImage">
+  <img [src]="workoutImage" width="300" height="250" *ngIf="workoutImage" />
+
+</div>
+
+
 <div>
   <label for="machineNumber">Machine #:</label>
   <input id="machineNumber" type="text" [(ngModel)]="machineNumber" />
-</div>
-
-<div>
-  <label for="machineImage">Machine Image URL:</label>
-  <input id="machineImage" type="text" [(ngModel)]="machineImage" placeholder="https://..." />
 </div>
 
 <div *ngFor="let set of sets; let i = index">

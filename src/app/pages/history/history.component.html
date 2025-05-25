@@ -15,9 +15,6 @@
     <label>Machine #:</label>
     <input [(ngModel)]="workout.machineNumber" />
 
-    <label>Machine Image URL:</label>
-    <input [(ngModel)]="workout.machineImage" />
-
     <div *ngFor="let set of workout.sets; let j = index">
       <p>Set {{ j + 1 }}</p>
       <label>Weight (kg):</label>
@@ -41,9 +38,6 @@
     <p><strong>Date:</strong> {{ workout.date | date:'medium' }}</p>
     <p><strong>Machine #:</strong> {{ workout.machineNumber || 'N/A' }}</p>
 
-    <div *ngIf="workout.machineImage">
-      <img [src]="workout.machineImage" alt="Machine image" width="200" />
-    </div>
 
     <ul>
       <li *ngFor="let set of workout.sets; let j = index">

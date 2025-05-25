@@ -16,27 +16,38 @@ export class WorkoutsComponent {
   selectedExercise = this.exercises[0];
   sets: SetEntry[] = [{ weight: 0, reps: 0 }];
   machineNumber = '';
-  machineImage = '';
 
 
   constructor(private workoutService: WorkoutService) {}
 
   addSet() {
-    this.sets.push({ weight: 0, reps: 0 });
+    if (this.sets.length < 4) {
+      this.sets.push({ weight: 0, reps: 0 });
+    } else {
+      alert('Only 4 sets are allowed.');
+    }
   }
+
 
   saveWorkout() {
     const newWorkout: WorkoutEntry = {
       exercise: this.selectedExercise,
       machineNumber: this.machineNumber,
-      machineImage: this.machineImage,
       sets: this.sets,
       date: new Date().toISOString()
     };
     this.workoutService.saveEntry(newWorkout);
     this.sets = [{ weight: 0, reps: 0 }]; // reset form
-    this.machineNumber = '';
-    this.machineImage = '';
+    this.machineNumber = '';    
     alert('Workout saved!');
   }
+
+  get workoutImage(): string | null {
+    if (!this.selectedExercise) return null;
+    const fileName = this.selectedExercise.toLowerCase().replace(/\s+/g, '-');
+    console.log('Selected image:',fileName);
+    return `assets/workout-images/${fileName}.jpg`;
+  }
+
+  
 }
