@@ -1,28 +1,32 @@
 <h2>Add Workout</h2>
 
-<label for="exercise">Exercise:</label>
-<select [(ngModel)]="selectedExercise" id="exercise">
-  <option *ngFor="let ex of exercises" [value]="ex">{{ ex }}</option>
-</select>
+<div class="workout-container">
 
-<div *ngIf="workoutImage">
-  <img [src]="workoutImage" width="300" height="250" *ngIf="workoutImage" />
 
+  <div class="form-card">
+    <div class="image-card" *ngIf="workoutImage">
+      <img [src]="workoutImage" alt="Workout Image" />
+    </div>
+
+    <label for="exercise">Exercise:</label>
+    <select [(ngModel)]="selectedExercise" id="exercise">
+      <option *ngFor="let ex of exercises" [value]="ex">{{ ex }}</option>
+    </select>
+
+    <label for="machineNumber">Machine #:</label>
+    <input id="machineNumber" type="text" [(ngModel)]="machineNumber" />
+
+    <div *ngFor="let set of sets; let i = index">
+      <p><strong>Set {{ i + 1 }}</strong></p>
+      <label>Weight (kg):</label>
+      <input type="number" [(ngModel)]="set.weight" />
+      <label>Reps:</label>
+      <input type="number" [(ngModel)]="set.reps" />
+    </div>
+
+    <div class="button-row">
+      <button (click)="addSet()">Add Set</button>
+      <button (click)="saveWorkout()">Save Workout</button>
+    </div>
+  </div>
 </div>
-
-
-<div>
-  <label for="machineNumber">Machine #:</label>
-  <input id="machineNumber" type="text" [(ngModel)]="machineNumber" />
-</div>
-
-<div *ngFor="let set of sets; let i = index">
-  <p>Set {{ i + 1 }}</p>
-  <label>Weight (kg):</label>
-  <input type="number" [(ngModel)]="set.weight" />
-  <label>Reps:</label>
-  <input type="number" [(ngModel)]="set.reps" />
-</div>
-
-<button (click)="addSet()">Add Set</button>
-<button (click)="saveWorkout()">Save Workout</button>
