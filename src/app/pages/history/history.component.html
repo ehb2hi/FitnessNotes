@@ -30,26 +30,31 @@
   </div>
 
   <!-- View Mode -->
+  <!-- View Mode -->
   <ng-template #viewMode>
     <h3>
       {{ workout.exercise }}
-  <span class="button-row">
-    <button (click)="startEdit(i)">✏️ Edit</button>
-    <button (click)="deleteWorkout(i)">🗑️ Delete</button>
-  </span>
+      <span class="button-row">
+        <button (click)="startEdit(i)">✏️ Edit</button>
+        <button (click)="deleteWorkout(i)">🗑️ Delete</button>
+      </span>
     </h3>
 
-    <p><strong>Date:</strong> {{ workout.date | date: 'medium' }}</p>
-    <p><strong>Machine #:</strong> {{ workout.machineNumber || 'N/A' }}</p>
+    <div class="history-content">
+      <div class="history-image">
+        <img [src]="getImageForWorkout(workout.exercise)" alt="Workout image" />
+      </div>
 
-    <div class="history-image">
-      <img [src]="getImageForWorkout(workout.exercise)" alt="Workout image" />
+      <div class="history-details">
+        <p><strong>Date:</strong> {{ workout.date | date: 'medium' }}</p>
+        <p><strong>Machine #:</strong> {{ workout.machineNumber || 'N/A' }}</p>
+
+        <ul>
+          <li *ngFor="let set of workout.sets; let j = index">
+            Set {{ j + 1 }} – {{ set.weight }} kg × {{ set.reps }} reps
+          </li>
+        </ul>
+      </div>
     </div>
-
-    <ul>
-      <li *ngFor="let set of workout.sets; let j = index">
-        Set {{ j + 1 }} – {{ set.weight }} kg × {{ set.reps }} reps
-      </li>
-    </ul>
-  </ng-template>
-</div>
+    </ng-template>
+  </div>
