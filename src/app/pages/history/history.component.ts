@@ -40,4 +40,9 @@ export class HistoryComponent implements OnInit {
     localStorage.setItem('workoutEntries', JSON.stringify(all));
     this.editIndex = null;
   }
+
+  getImageForWorkout(exercise: string): string {
+    const fileName = exercise.toLowerCase().replace(/\s+/g, '-');
+    return `assets/workout-images/${fileName}.jpg`;
+  }
 }

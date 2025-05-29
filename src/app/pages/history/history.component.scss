@@ -2,16 +2,86 @@ h2 {
   margin-bottom: 1rem;
 }
 
-div {
+/* Card for each workout entry */
+.history-card {
   margin-bottom: 1.5rem;
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   background-color: #fdfdfd;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-img {
+/* Workout image */
+.history-image {
+  margin: 0.75rem 0;
+
+  img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* Button group spacing */
+.button-row {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+/* Buttons inside card */
+button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+/* List of sets */
+ul {
   margin-top: 0.5rem;
-  border-radius: 8px;
+  padding-left: 1.25rem;
+
+  li {
+    margin-bottom: 4px;
+  }
+}
+
+/* Inputs used in edit mode */
+input {
+  width: 100%;
+  max-width: 300px;
+  padding: 6px;
+  margin-bottom: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.button-row {
+  margin-left: 0.5rem;
+  display: inline-flex;
+  gap: 0.5rem;
+}
+
+.history-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.75rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: flex-start;
+  }
 }

@@ -4,7 +4,7 @@
   <p>No workouts yet. Go to "Workouts" to add some.</p>
 </div>
 
-<div *ngFor="let workout of workouts; let i = index">
+<div class="history-card" *ngFor="let workout of workouts; let i = index">
   <!-- Edit Mode -->
   <div *ngIf="editIndex === i; else viewMode">
     <h3>Editing Workout</h3>
@@ -16,28 +16,35 @@
     <input [(ngModel)]="workout.machineNumber" />
 
     <div *ngFor="let set of workout.sets; let j = index">
-      <p>Set {{ j + 1 }}</p>
+      <p><strong>Set {{ j + 1 }}</strong></p>
       <label>Weight (kg):</label>
       <input type="number" [(ngModel)]="set.weight" />
       <label>Reps:</label>
       <input type="number" [(ngModel)]="set.reps" />
     </div>
 
-    <button (click)="saveEdit(i)">💾 Save</button>
-    <button (click)="editIndex = null">✖ Cancel</button>
+    <div class="button-row">
+      <button (click)="saveEdit(i)">💾 Save</button>
+      <button (click)="editIndex = null">✖ Cancel</button>
+    </div>
   </div>
 
   <!-- View Mode -->
   <ng-template #viewMode>
     <h3>
       {{ workout.exercise }}
-      <button (click)="startEdit(i)">✏️ Edit</button>
-      <button (click)="deleteWorkout(i)">🗑️ Delete</button>
+  <span class="button-row">
+    <button (click)="startEdit(i)">✏️ Edit</button>
+    <button (click)="deleteWorkout(i)">🗑️ Delete</button>
+  </span>
     </h3>
 
-    <p><strong>Date:</strong> {{ workout.date | date:'medium' }}</p>
+    <p><strong>Date:</strong> {{ workout.date | date: 'medium' }}</p>
     <p><strong>Machine #:</strong> {{ workout.machineNumber || 'N/A' }}</p>
 
+    <div class="history-image">
+      <img [src]="getImageForWorkout(workout.exercise)" alt="Workout image" />
+    </div>
 
     <ul>
       <li *ngFor="let set of workout.sets; let j = index">
@@ -45,6 +52,4 @@
       </li>
     </ul>
   </ng-template>
-
-  <hr />
 </div>
