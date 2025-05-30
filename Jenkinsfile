@@ -1,7 +1,12 @@
+properties([
+  buildDiscarder(logRotator(numToKeepStr: '5'))
+])
+
+
 pipeline {
     agent {
         docker {
-            image 'reactnativecommunity/react-native-android'
+            image 'ghcr.io/sergiitk/gradle-android:8.1-jdk21'
             args '-u root -v $HOME/.npm:/root/.npm -v $HOME/.gradle:/root/.gradle'
         }
     }
