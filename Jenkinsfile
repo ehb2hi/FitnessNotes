@@ -1,0 +1,47 @@
+pipeline {
+    agent any
+
+    environment {
+        ANDROID_HOME = "${HOME}/Android/Sdk"
+        GRADLE_OPTS = "-Dorg.gradle.jvmargs=-Xmx2048m"
+        PATH = "${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools"
+    }
+
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                sh 'npm ci'
+            }
+        }
+
+        stage('Build Angular App') {
+            steps {
+                sh 'npm run build' // or 'ng build --prod'
+            }
+        }
+
+        stage('Capacitor Copy & Sync') {
+            steps {
+                sh 'npx cap copy android'
+                sh 'npx cap sync android'
+            }
+        }
+
+        stage('Build APK') {
+            steps {
+                dir('android') {
+                    sh './gradlew assembleDebug'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'android/app/build/outputs/apk/debug/app-debug.apk', fingerprint: true
+        }
+        failure {
+            echo "Build failed. Check logs."
+        }
+    }
+}
