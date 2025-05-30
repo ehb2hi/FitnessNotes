@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'reactnativecommunity/react-native-android'
+            args '-v $HOME/.gradle:/root/.gradle'
+        }
+    }
 
     environment {
         ANDROID_HOME = "${HOME}/Android/Sdk"
