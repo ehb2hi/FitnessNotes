@@ -26,9 +26,9 @@ pipeline {
             }
         }
 
-        stage('Capacitor Copy & Sync') {
+        stage('Capacitor Add + Sync Android') {
             steps {
-                sh 'npx cap copy android'
+                sh 'npx cap add android || true'  // skip error if already added
                 sh 'npx cap sync android'
             }
         }
