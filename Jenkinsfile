@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'reactnativecommunity/react-native-android'
-            args '-v $HOME/.gradle:/root/.gradle'
+            args '-u root -v $HOME/.npm:/root/.npm -v $HOME/.gradle:/root/.gradle'
         }
     }
 
@@ -15,7 +15,8 @@ pipeline {
     stages {
         stage('Install Dependencies') {
             steps {
-                sh 'npm ci'
+                sh 'rm -rf node_modules package-lock.json'
+                sh 'npm install'
             }
         }
 
