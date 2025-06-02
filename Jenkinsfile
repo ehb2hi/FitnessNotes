@@ -6,7 +6,7 @@ properties([
 pipeline {
     agent {
         docker {
-            image 'alvrme/alpine-android:android-34-jdk21-v2024.04.26'
+            image 'reactnativecommunity/react-native-android'
             args '-u root -v $HOME/.npm:/root/.npm -v $HOME/.gradle:/root/.gradle'
         }
     }
