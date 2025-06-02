@@ -12,7 +12,26 @@ import { WorkoutEntry, SetEntry } from '../../models/workout-entry.model';
   styleUrls: ['./workouts.component.scss']
 })
 export class WorkoutsComponent {
-  exercises = ['Bench Press', 'Leg Curl', 'Lat Pulldown', 'Squat', 'Lat Press Back'];
+  exercises = [
+    // Chest
+    'Bench Press',
+    'Chest Butter Fly',
+    'Push-Up',
+    'Incline Dumbbell Press',
+
+    // Back
+    'Lat Press Back',  // included from your original entry
+    'lat-pulldown',
+
+    // Shoulders
+
+    // Biceps
+    'Seated Dumbbell Curl',
+
+    // Triceps
+    'Triceps Pushdown'
+]
+
   selectedExercise = this.exercises[0];
   sets: SetEntry[] = [{ weight: 0, reps: 0 }];
   machineNumber = '';
