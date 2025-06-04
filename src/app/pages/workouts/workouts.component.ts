@@ -24,12 +24,19 @@ export class WorkoutsComponent {
     'lat-pulldown',
 
     // Shoulders
+    'Lever Shoulder Press',
+
+
 
     // Biceps
     'Seated Dumbbell Curl',
 
     // Triceps
-    'Triceps Pushdown'
+    'Triceps Pushdown',
+
+    // Legs
+    'Leg Curl',
+
 ]
 
   selectedExercise = this.exercises[0];
