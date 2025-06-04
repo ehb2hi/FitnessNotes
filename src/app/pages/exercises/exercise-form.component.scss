@@ -1,0 +1,12 @@
+.history-label {
+  margin-bottom: 1rem;
+  a {
+    color: #007bff;
+    text-decoration: underline;
+    font-weight: 500;
+
+    &:hover {
+      color: #0056b3;
+    }
+  }
+}

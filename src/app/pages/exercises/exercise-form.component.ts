@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { WorkoutService } from '../../services/workout.service';
 import { SetEntry, WorkoutEntry } from '../../models/workout-entry.model';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-exercise-form',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './exercise-form.component.html',
   styleUrls: ['./exercise-form.component.scss']
 })
@@ -52,4 +52,9 @@ export class ExerciseFormComponent implements OnInit {
     this.machineNumber = '';
     alert('Workout saved!');
   }
+
+  getFormattedExerciseName(): string {
+    return this.exerciseName.toLowerCase().replace(/\s+/g, '-');
+  }
+
 }

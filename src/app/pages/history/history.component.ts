@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { WorkoutService } from '../../services/workout.service';
 import { WorkoutEntry } from '../../models/workout-entry.model';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-history',
@@ -14,12 +15,18 @@ import { WorkoutEntry } from '../../models/workout-entry.model';
 export class HistoryComponent implements OnInit {
   workouts: WorkoutEntry[] = [];
   editIndex: number | null = null;
+  filterExercise: string | null = null;
 
 
-  constructor(private workoutService: WorkoutService) {}
+  constructor(private workoutService: WorkoutService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.workouts = this.workoutService.getAllEntries();
+    this.filterExercise = this.route.snapshot.paramMap.get('exerciseName');
+
+    const all = this.workoutService.getAllEntries();
+    this.workouts = this.filterExercise
+      ? all.filter(w => w.exercise.toLowerCase() === this.filterExercise?.toLowerCase())
+      : all;
   }
 
   deleteWorkout(index: number): void {

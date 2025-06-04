@@ -2,3 +2,10 @@
 <div class="image-card" *ngIf="workoutImage">
   <img [src]="workoutImage" alt="Workout Image" />
 </div>
+
+<p class="history-label">
+  <a [routerLink]="['/exercise-history', getFormattedExerciseName()]">
+    📖 View History for {{ exerciseName }}
+  </a>
+</p>
+
