@@ -1,0 +1,12 @@
+<h2>Select a Muscle Group</h2>
+
+<div class="category-grid">
+  <div
+    class="category-card"
+    *ngFor="let category of categories"
+    [routerLink]="['/exercises', category.name.toLowerCase()]"
+  >
+    <img [src]="category.image" [alt]="category.name" />
+    <h3>{{ category.name }}</h3>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<h2>{{ categoryName }} Exercises</h2>
+
+<div class="exercise-grid">
+  <div
+    class="exercise-card"
+    *ngFor="let exercise of exercises"
+    [routerLink]="['/exercise', formatExerciseLink(exercise)]"
+  >
+    <h3>{{ exercise }}</h3>
+  </div>
+</div>
