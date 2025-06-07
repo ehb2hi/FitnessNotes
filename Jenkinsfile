@@ -6,7 +6,7 @@ properties([
 pipeline {
     agent {
         docker {
-            image 'reactnativecommunity/react-native-android'
+            image 'ehb2docker/ehb2hi-react-native-android:latest'
             args '-u root -v $HOME/.npm:/root/.npm -v $HOME/.gradle:/root/.gradle'
         }
     }
