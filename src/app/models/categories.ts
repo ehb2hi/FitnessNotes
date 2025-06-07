@@ -18,17 +18,17 @@ export const CATEGORIES: ExerciseCategory[] = [
   {
     name: 'Shoulders',
     image: 'assets/category-icons/shoulders.jpg',
-    exercises: ['Overhead Press', 'Lateral Raise', 'Lever Shoulder Press']
+    exercises: ['Dumbbell Overhead Press', 'Lateral Raise', 'Lever Shoulder Press']
   },
   {
     name: 'Biceps',
     image: 'assets/category-icons/biceps.jpg',
-    exercises: ['Barbell Curl', 'Dumbbell Curl' ,'Seated Dumbbell Curl']
+    exercises: ['Barbell Curl','Seated Dumbbell Curl']
   },
   {
     name: 'Triceps',
     image: 'assets/category-icons/triceps.jpg',
-    exercises: ['Tricep Pushdown', 'Triceps Pushdown','Overhead Extension']
+    exercises: ['Triceps Pushdown','Overhead Extension']
   },
   {
     name: 'Legs',

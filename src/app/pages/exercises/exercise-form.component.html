@@ -1,11 +1,34 @@
 <h2>{{ exerciseName }}</h2>
-<div class="image-card" *ngIf="workoutImage">
-  <img [src]="workoutImage" alt="Workout Image" />
+
+<div class="workout-container"> 
+  <div class="form-card">
+    <div class="image-card" *ngIf="workoutImage">
+      <img [src]="workoutImage" alt="Workout Image" />
+    </div>
+
+    <label for="machineNumber">Machine #:</label>
+    <input id="machineNumber" type="text" [(ngModel)]="machineNumber" />
+
+    <div *ngFor="let set of sets; let i = index">
+      <p><strong>Set {{ i + 1 }}</strong></p>
+      <label>Weight (kg):</label>
+      <input type="number" [(ngModel)]="set.weight" />
+      <label>Reps:</label>
+      <input type="number" [(ngModel)]="set.reps" />
+    </div>
+
+    <div class="button-row">
+      <button (click)="addSet()">Add Set</button>
+      <button (click)="saveWorkout()">Save Workout</button>
+    </div>
+
+    <p class="history-label">
+      <a [routerLink]="['/exercise-history', getFormattedExerciseName()]">
+        📖 View History for {{ exerciseName }}
+      </a>
+    </p>
+  </div>
 </div>
 
-<p class="history-label">
-  <a [routerLink]="['/exercise-history', getFormattedExerciseName()]">
-    📖 View History for {{ exerciseName }}
-  </a>
-</p>
+
 

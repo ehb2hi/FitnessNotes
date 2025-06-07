@@ -21,12 +21,15 @@ export class HistoryComponent implements OnInit {
   constructor(private workoutService: WorkoutService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.filterExercise = this.route.snapshot.paramMap.get('exerciseName');
+    this.filterExercise = this.route.snapshot.paramMap.get('exerciseName')?.replace(/-/g, ' ') || '';
 
     const all = this.workoutService.getAllEntries();
     this.workouts = this.filterExercise
       ? all.filter(w => w.exercise.toLowerCase() === this.filterExercise?.toLowerCase())
       : all;
+      
+    console.log('Filter exercise:', this.filterExercise);
+    console.log('Saved exercises:', all.map(w => w.exercise));
   }
 
   deleteWorkout(index: number): void {

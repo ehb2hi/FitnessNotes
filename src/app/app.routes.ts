@@ -6,7 +6,7 @@ import { ExerciseListComponent } from './pages/exercises/exercise-list.component
 import { ExerciseFormComponent } from './pages/exercises/exercise-form.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'workouts', pathMatch: 'full' },
+  { path: '', redirectTo: 'categories', pathMatch: 'full' },
   { path: 'categories', component: CategoryListComponent },
   { path: 'exercises/:categoryName', component: ExerciseListComponent },
   { path: 'workouts', component: WorkoutsComponent },
