@@ -22,7 +22,8 @@ jobs:
       # Pull your Docker image from Docker Hub
       - name: Pull Docker image
         run: |
-          docker pull ehb2docker/react-native-android-jdk21
+          docker pull ehb2docker/react-native-android-jdk21:latest
+                      
 
       # Run Angular + Capacitor + Gradle build inside your Docker image
       - name: Run build inside Docker container
