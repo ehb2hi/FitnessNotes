@@ -15,15 +15,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # OPTIONAL: Docker Login (if you want to pull base image or push your image)
+      # Docker Login to pull private image
       - name: Docker Login
         run: echo "${{ secrets.DOCKERHUB_TOKEN_OR_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      # Build your Docker image locally in GitHub Actions
-      - name: Build Docker image
+      # Pull your Docker image from Docker Hub
+      - name: Pull Docker image
         run: |
-          docker build -t ehb2docker/react-native-android-jdk21 .
-
+          docker pull ehb2docker/react-native-android-jdk21
 
       # Run Angular + Capacitor + Gradle build inside your Docker image
       - name: Run build inside Docker container
