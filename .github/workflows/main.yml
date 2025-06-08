@@ -11,30 +11,36 @@ jobs:
     name: Build Android APK
     runs-on: ubuntu-latest
 
-    container:
-      image: ehb2docker/react-native-android-jdk21:latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Install Node.js dependencies
-        run: |
-          npm install
+      # OPTIONAL: Docker Login (if you want to pull base image or push your image)
+      - name: Docker Login
+        run: echo "${{ secrets.DOCKERHUB_TOKEN_OR_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      - name: Build Angular app
+      # Build your Docker image locally in GitHub Actions
+      - name: Build Docker image
         run: |
-          npm run build
+          docker build -t ehb2docker/react-native-android-jdk21 .
 
-      - name: Sync Capacitor
+      # OPTIONAL: Push your image to DockerHub (if you want to version and store it)
+      - name: Push Docker image
         run: |
-          npx cap sync android
+          docker push ehb2docker/react-native-android-jdk21
 
-      - name: Build APK
+      # Run Angular + Capacitor + Gradle build inside your Docker image
+      - name: Run build inside Docker container
         run: |
-          cd android
-          ./gradlew assembleDebug
+          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace ehb2docker/react-native-android-jdk21 /bin/bash -c "
+            npm install &&
+            npm run build &&
+            npx cap sync android &&
+            cd android &&
+            ./gradlew assembleDebug
+          "
 
+      # Upload APK artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:

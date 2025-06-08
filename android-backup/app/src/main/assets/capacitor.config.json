@@ -1,0 +1,5 @@
+{
+	"appId": "com.fitnessnotes.app",
+	"appName": "fitness-notes",
+	"webDir": "dist/fitness-notes/browser"
+}

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { WorkoutService } from '../../services/workout.service';
 import { SetEntry, WorkoutEntry } from '../../models/workout-entry.model';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule, Router } from '@angular/router';
+import { App as CapacitorApp } from '@capacitor/app';
 
 @Component({
   selector: 'app-exercise-form',
@@ -12,18 +13,29 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
   templateUrl: './exercise-form.component.html',
   styleUrls: ['./exercise-form.component.scss']
 })
-export class ExerciseFormComponent implements OnInit {
+export class ExerciseFormComponent implements OnInit, OnDestroy{
   exerciseName = '';
   machineNumber = '';
+  private backHandler: any;
   sets: SetEntry[] = [{ weight: 0, reps: 0 }];
 
   constructor(
     private route: ActivatedRoute,
-    private workoutService: WorkoutService
+    private workoutService: WorkoutService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.exerciseName = this.route.snapshot.paramMap.get('exerciseName')?.replace(/-/g, ' ') || '';
+
+    this.backHandler = CapacitorApp.addListener('backButton', () => {
+      this.router.navigate(['/exercises', this.route.snapshot.paramMap.get('categoryName')]);
+    });
+  }
+  ngOnDestroy(): void {
+    if (this.backHandler) {
+      this.backHandler.remove();
+    }
   }
 
   get workoutImage(): string | null {
