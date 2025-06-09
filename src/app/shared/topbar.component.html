@@ -10,6 +10,7 @@
     </button>
 
     <div class="menu-dropdown" *ngIf="isMenuOpen">
+      <button (click)="navigateTo('/settings')">Settings</button>
       <button (click)="navigateTo('/about')">About</button>
       <button (click)="navigateTo('/history')">History</button>
       <button (click)="navigateTo('/categories')">Categories</button>

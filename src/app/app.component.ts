@@ -15,6 +15,14 @@ export class AppComponent {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
+      const savedTheme = localStorage.getItem('appTheme');
+      
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.add('light-theme');
+    }
+
     CapacitorApp.addListener('backButton', ({ canGoBack }) => {
       if (canGoBack) {
         window.history.back(); // Use Angular history
