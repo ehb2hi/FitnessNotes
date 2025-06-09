@@ -5,8 +5,14 @@
   </div>
 
   <div class="right-section">
-    <button class="overflow-btn" (click)="onMenuClick()">
-      &#x22EE; <!-- vertical 3 dots -->
+    <button class="overflow-btn" (click)="toggleMenu()">
+      &#x22EE;
     </button>
+
+    <div class="menu-dropdown" *ngIf="isMenuOpen">
+      <button (click)="navigateTo('/about')">About</button>
+      <button (click)="navigateTo('/history')">History</button>
+      <button (click)="navigateTo('/categories')">Categories</button>
+    </div>
   </div>
 </header>
