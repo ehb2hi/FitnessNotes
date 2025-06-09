@@ -1,0 +1,8 @@
+{
+  "android": {
+    "path": "resources/android"
+  },
+  "ios": {
+    "path": "resources/ios"
+  }
+}
