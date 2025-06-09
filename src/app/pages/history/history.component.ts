@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
-import { WorkoutService } from '../../services/workout.service';
+import { FormsModule } from '@angular/forms';
+import { WorkoutDatabaseService } from '../../services/workout-database.service';
 import { WorkoutEntry } from '../../models/workout-entry.model';
 import { ActivatedRoute } from '@angular/router';
 
@@ -17,25 +17,40 @@ export class HistoryComponent implements OnInit {
   editIndex: number | null = null;
   filterExercise: string | null = null;
 
+  constructor(
+    private workoutDb: WorkoutDatabaseService,
+    private route: ActivatedRoute
+  ) {}
 
-  constructor(private workoutService: WorkoutService, private route: ActivatedRoute) {}
+  async ngOnInit(): Promise<void> {
+    await this.workoutDb.initDB(); 
 
-  ngOnInit(): void {
     this.filterExercise = this.route.snapshot.paramMap.get('exerciseName')?.replace(/-/g, ' ') || '';
 
-    const all = this.workoutService.getAllEntries();
-    this.workouts = this.filterExercise
-      ? all.filter(w => w.exercise.toLowerCase() === this.filterExercise?.toLowerCase())
-      : all;
-      
     console.log('Filter exercise:', this.filterExercise);
-    console.log('Saved exercises:', all.map(w => w.exercise));
+
+    if (this.filterExercise) {
+      this.workouts = await this.workoutDb.getWorkoutsByExercise(this.filterExercise);
+    } else {
+      this.workouts = await this.workoutDb.getAllWorkouts();
+    }
+    console.log('HistoryComponent workouts:', this.workouts);
+
+    console.log('Saved exercises:', this.workouts.map(w => w.exercise));
   }
 
-  deleteWorkout(index: number): void {
+  async deleteWorkout(index: number): Promise<void> {
     if (confirm('Are you sure you want to delete this workout?')) {
-      this.workoutService.deleteEntry(index);
-      this.workouts = this.workoutService.getAllEntries(); // refresh list
+      // ⚠️ You need the workout "id" to delete it properly → for now assume it's workout.id (you need to add id to WorkoutEntry model)
+      // Example: await this.workoutDb.deleteWorkoutById(this.workouts[index].id);
+
+      alert('Delete from DB not yet implemented — need workout ID in model!');
+      // Refresh list:
+      if (this.filterExercise) {
+        this.workouts = await this.workoutDb.getWorkoutsByExercise(this.filterExercise);
+      } else {
+        this.workouts = await this.workoutDb.getAllWorkouts();
+      }
     }
   }
 
@@ -44,10 +59,8 @@ export class HistoryComponent implements OnInit {
   }
 
   saveEdit(index: number): void {
-    const updatedWorkout = this.workouts[index];
-    const all = this.workoutService.getAllEntries();
-    all[index] = updatedWorkout;
-    localStorage.setItem('workoutEntries', JSON.stringify(all));
+    // For now, editing not yet implemented in DB → would need updateWorkout()
+    alert('Editing workout is not yet implemented with DB!');
     this.editIndex = null;
   }
 

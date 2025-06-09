@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { WorkoutService } from '../../services/workout.service';
+// import { WorkoutService } from '../../services/workout.service';
+import { WorkoutDatabaseService } from '../../services/workout-database.service';
 import { SetEntry, WorkoutEntry } from '../../models/workout-entry.model';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { App as CapacitorApp } from '@capacitor/app';
@@ -21,11 +22,14 @@ export class ExerciseFormComponent implements OnInit, OnDestroy{
 
   constructor(
     private route: ActivatedRoute,
-    private workoutService: WorkoutService,
+    // private workoutService: WorkoutService,
+    private workoutDb: WorkoutDatabaseService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    await this.workoutDb.initDB(); 
+
     this.exerciseName = this.route.snapshot.paramMap.get('exerciseName')?.replace(/-/g, ' ') || '';
 
     this.backHandler = CapacitorApp.addListener('backButton', () => {
@@ -52,14 +56,14 @@ export class ExerciseFormComponent implements OnInit, OnDestroy{
     }
   }
 
-  saveWorkout() {
+  async saveWorkout() {
     const newWorkout: WorkoutEntry = {
       exercise: this.exerciseName,
       machineNumber: this.machineNumber,
       sets: this.sets,
       date: new Date().toISOString()
     };
-    this.workoutService.saveEntry(newWorkout);
+    await this.workoutDb.insertWorkout(newWorkout);
     this.sets = [{ weight: 0, reps: 0 }];
     this.machineNumber = '';
     alert('Workout saved!');
