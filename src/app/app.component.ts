@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
 import { NavbarComponent } from './shared/navbar/navbar.component';
 import { App as CapacitorApp } from '@capacitor/app';
+import { TopbarComponent } from './shared/topbar.component';  
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, NavbarComponent],
+  imports: [RouterOutlet, TopbarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
