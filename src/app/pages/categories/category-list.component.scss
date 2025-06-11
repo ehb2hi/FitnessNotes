@@ -36,3 +36,20 @@ h2 {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   }
 }
+
+:host-context(.dark-theme) {
+  .category-card {
+    background-color: #4d4b46;
+    color: #f5f5f5;
+    border: 1px solid #444;
+  }
+
+  h2 {
+    color: #f5f5f5;
+  }
+
+  img {
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+}

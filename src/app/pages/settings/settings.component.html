@@ -11,9 +11,11 @@
     <li>🗑️ Clear workout history: Coming soon</li>
   </ul>
 
-  <div class="settings-item" (click)="toggleTheme()">
+  <div class="settings-item">
     <span>🌓 Dark Theme</span>
-    <span>{{ isDarkTheme ? 'On' : 'Off' }}</span>
+    <label class="switch">
+      <input type="checkbox" [checked]="isDarkTheme" (change)="toggleTheme()">
+      <span class="slider round"></span>
+    </label>
   </div>
-
 </div>
