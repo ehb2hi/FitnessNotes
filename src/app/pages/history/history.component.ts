@@ -41,10 +41,14 @@ export class HistoryComponent implements OnInit {
 
   async deleteWorkout(index: number): Promise<void> {
     if (confirm('Are you sure you want to delete this workout?')) {
-      // ⚠️ You need the workout "id" to delete it properly → for now assume it's workout.id (you need to add id to WorkoutEntry model)
-      // Example: await this.workoutDb.deleteWorkoutById(this.workouts[index].id);
+      const workout = this.workouts[index];
+      if (!workout.id) {
+        alert('Error: Workout has no ID and cannot be deleted!');
+        return;
+      }
 
-      alert('Delete from DB not yet implemented — need workout ID in model!');
+      await this.workoutDb.deleteWorkoutById(workout.id);
+
       // Refresh list:
       if (this.filterExercise) {
         this.workouts = await this.workoutDb.getWorkoutsByExercise(this.filterExercise);
@@ -58,10 +62,25 @@ export class HistoryComponent implements OnInit {
     this.editIndex = index;
   }
 
-  saveEdit(index: number): void {
-    // For now, editing not yet implemented in DB → would need updateWorkout()
-    alert('Editing workout is not yet implemented with DB!');
+  async saveEdit(index: number): Promise<void> {
+    const workout = this.workouts[index];
+    if (!workout.id) {
+      alert('Error: Workout has no ID and cannot be updated!');
+      return;
+    }
+
+    await this.workoutDb.updateWorkout(workout);
+
     this.editIndex = null;
+
+    // Optional: Refresh list
+    if (this.filterExercise) {
+      this.workouts = await this.workoutDb.getWorkoutsByExercise(this.filterExercise);
+    } else {
+      this.workouts = await this.workoutDb.getAllWorkouts();
+    }
+
+    alert('Workout updated!');
   }
 
   getImageForWorkout(exercise: string): string {
