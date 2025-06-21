@@ -47,24 +47,29 @@ select {
 }
 
 .image-card {
-  flex: 1; // allow image-card to take space
-  display: block; // instead of flex
-  margin-bottom: 1rem;
+  width: 320px;
+  height: 240px;
+  margin: 0 auto 1rem auto; // center horizontally
+  padding: 1rem;
+  //background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   img {
-    width: 100%; // so it scales with container
-    height: auto;
+    max-width: 100%;
+    max-height: 100%;
     object-fit: contain;
-    border-radius: 12px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
   }
 
   @media (min-width: 768px) {
-    margin-bottom: 0;
-    margin-right: 1rem;
+    margin-right: auto;
+    margin-left: auto;
   }
 }
-
 
 .form-card {
   flex: 1;

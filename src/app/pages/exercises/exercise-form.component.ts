@@ -45,7 +45,7 @@ export class ExerciseFormComponent implements OnInit, OnDestroy{
   get workoutImage(): string | null {
     if (!this.exerciseName) return null;
     const fileName = this.exerciseName.toLowerCase().replace(/\s+/g, '-');
-    return `assets/workout-images/${fileName}.jpg`;
+    return `assets/workout-images/${fileName}.png`;
   }
 
   addSet() {

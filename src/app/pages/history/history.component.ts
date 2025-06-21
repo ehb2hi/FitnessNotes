@@ -85,6 +85,6 @@ export class HistoryComponent implements OnInit {
 
   getImageForWorkout(exercise: string): string {
     const fileName = exercise.toLowerCase().replace(/\s+/g, '-');
-    return `assets/workout-images/${fileName}.jpg`;
+    return `assets/workout-images/${fileName}.png`;
   }
 }
