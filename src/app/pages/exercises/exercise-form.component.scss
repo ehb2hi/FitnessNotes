@@ -1,12 +1,13 @@
 .workout-container {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   padding: 1rem;
 
   @media (min-width: 768px) {
     flex-direction: row;
     align-items: stretch;
+    gap: 2rem; // Increased gap for larger screens
   }
 }
 
