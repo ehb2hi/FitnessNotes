@@ -33,6 +33,6 @@ export const CATEGORIES: ExerciseCategory[] = [
   {
     name: 'Legs',
     image: 'assets/category-icons/legs.png',
-    exercises: ['Squat', 'Leg Curl', 'Leg Press']
+    exercises: ['Squat', 'Leg Curl', 'Vertical Leg Press', 'Horizontal Leg Press',  'abductors', 'adductors']
   }
 ];
