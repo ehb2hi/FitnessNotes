@@ -28,7 +28,8 @@ jobs:
       BUILD_TYPE: ${{ github.event.inputs.buildType || 'debug' }}
 
     steps:
-      - name: Clean physical workspace
+      # 🧹 Clean broken workspace on physical runner
+      - name: Fix permissions and remove previous repo
         if: github.event.inputs.runnerType == 'ubuntu'
         run: |
           sudo chown -R $USER:$USER "${{ runner.workspace }}/FitnessNotes" || true
@@ -45,19 +46,38 @@ jobs:
         if: github.event.inputs.runnerType != 'ubuntu'
         run: docker pull ehb2docker/react-native-android-jdk21:latest
 
-      - name: Build in Docker (GitHub-hosted runner)
+      # 🧱 Decode keystore only if building release
+      - name: Decode keystore
+        if: env.BUILD_TYPE == 'release'
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > android/release-key.jks
+        working-directory: ${{ runner.workspace }}/FitnessNotes
+
+      # 🛠 Build on GitHub-hosted runner using Docker
+      - name: Build in Docker (GitHub-hosted)
         if: github.event.inputs.runnerType != 'ubuntu'
         run: |
-          docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace ehb2docker/react-native-android-jdk21 /bin/bash -c "
-            npm install &&
-            npm run build &&
-            npx @capacitor/assets generate --android &&
-            npx cap add android || true &&
-            npx cap sync android &&
-            cd android &&
-            ./gradlew assemble${BUILD_TYPE^}
-          "
+          docker run --rm \
+            -v ${{ github.workspace }}:/workspace \
+            -w /workspace \
+            -e KEYSTORE_PASSWORD="${{ secrets.KEYSTORE_PASSWORD }}" \
+            -e KEY_ALIAS="${{ secrets.KEY_ALIAS }}" \
+            -e KEY_PASSWORD="${{ secrets.KEY_PASSWORD }}" \
+            ehb2docker/react-native-android-jdk21 /bin/bash -c "
+              npm install &&
+              rm -rf dist .angular/cache &&
+              npm run build &&
+              npx @capacitor/assets generate --android &&
+              npx cap add android || true &&
+              npx cap sync android &&
+              cd android &&
+              ./gradlew assemble${BUILD_TYPE^} \
+                -PKEYSTORE_PASSWORD=${KEYSTORE_PASSWORD} \
+                -PKEY_ALIAS=${KEY_ALIAS} \
+                -PKEY_PASSWORD=${KEY_PASSWORD}
+            "
 
+      # 🛠 Build on physical Ubuntu runner
       - name: Build on physical Ubuntu runner
         if: github.event.inputs.runnerType == 'ubuntu'
         run: |
@@ -69,7 +89,10 @@ jobs:
           npx cap add android || true
           npx cap sync android
           cd android
-          ./gradlew assemble${BUILD_TYPE^}
+          ./gradlew assemble${BUILD_TYPE^} \
+            -PKEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} \
+            -PKEY_ALIAS=${{ secrets.KEY_ALIAS }} \
+            -PKEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

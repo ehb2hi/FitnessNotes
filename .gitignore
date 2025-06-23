@@ -1,4 +1,19 @@
-android/
+# Android project (keep android folder, but ignore build stuff)
+# Allow everything inside android first
+!android/
+!android/**
+
+# Then re-ignore Android build/cache/IDE files
+android/.gradle/
+android/.idea/
+android/local.properties
+android/app/build/
+android/build/
+android/captures/
+android/.DS_Store
+android/app/*.iml
+android/*.iml
+
 # Node modules (huge library folder)
 node_modules/
 
