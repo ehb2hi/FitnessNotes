@@ -1,7 +1,17 @@
 name: Android Build
 
 on:
-  workflow_dispatch:  # Manual build button
+  workflow_dispatch:
+    inputs:
+      buildType:
+        description: 'Select APK build type'
+        required: true
+        default: 'debug'
+        type: choice
+        options:
+          - debug
+          - release
+
   push:
     branches: [ develop, main ]
   pull_request:
@@ -11,6 +21,9 @@ jobs:
   build:
     name: Build Android APK
     runs-on: ubuntu-latest
+    env:
+      BUILD_TYPE: ${{ github.event.inputs.buildType || 'debug' }}
+
 
     steps:
       - name: Checkout code
@@ -25,7 +38,6 @@ jobs:
         run: |
           docker pull ehb2docker/react-native-android-jdk21:latest
 
-
       - name: Run build inside Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace ehb2docker/react-native-android-jdk21 /bin/bash -c "
@@ -35,13 +47,12 @@ jobs:
             npx cap add android || true &&
             npx cap sync android &&
             cd android &&
-            ./gradlew assembleRelease
+            ./gradlew assemble${BUILD_TYPE^}
           "
-
 
       # Upload APK artifact
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/release/app-release-unsigned.apk
+          name: app-${BUILD_TYPE^}.apk
+          path: android/app/build/outputs/apk/${BUILD_TYPE^}/app-${BUILD_TYPE^}*.apk
