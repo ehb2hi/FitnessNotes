@@ -23,22 +23,24 @@ on:
 jobs:
   build:
     name: Build Android APK
-    runs-on: ${{ github.event.inputs.runnerType == 'ubuntu' && 'brahim4Captiva' || 'ubuntu-latest' }}
+    runs-on: ${{ github.event.inputs.runnerType == 'ubuntu' && 'brahim4Captiva || 'ubuntu-latest' }}
     env:
       BUILD_TYPE: ${{ github.event.inputs.buildType || 'debug' }}
-      PROJECT_PATH: /home/brahim/repos/FitnessNotes
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Docker Login
+        if: github.event.inputs.runnerType != 'ubuntu'
         run: echo "${{ secrets.DOCKERHUB_TOKEN_OR_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Pull Docker image
+        if: github.event.inputs.runnerType != 'ubuntu'
         run: docker pull ehb2docker/react-native-android-jdk21:latest
 
-      - name: Build in Docker container
+      - name: Build in Docker (GitHub-hosted runner)
+        if: github.event.inputs.runnerType != 'ubuntu'
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace ehb2docker/react-native-android-jdk21 /bin/bash -c "
             npm install &&
@@ -49,10 +51,11 @@ jobs:
             cd android &&
             ./gradlew assemble${BUILD_TYPE^}
           "
-      - name: Build APK on physical runner (native Ubuntu)
+
+      - name: Build on physical Ubuntu runner
         if: github.event.inputs.runnerType == 'ubuntu'
         run: |
-          cd $PROJECT_PATH
+          cd ${{ runner.workspace }}/FitnessNotes/FitnessNotes
           rm -rf dist
           npm install
           npm run build
