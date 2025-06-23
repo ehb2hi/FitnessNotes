@@ -31,6 +31,7 @@ jobs:
       - name: Clean physical workspace
         if: github.event.inputs.runnerType == 'ubuntu'
         run: |
+          sudo chown -R $USER:$USER "${{ runner.workspace }}/FitnessNotes" || true
           sudo rm -rf "${{ runner.workspace }}/FitnessNotes/FitnessNotes" || true
 
       - name: Checkout code
