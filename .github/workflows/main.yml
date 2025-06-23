@@ -4,41 +4,40 @@ on:
   workflow_dispatch:
     inputs:
       buildType:
-        description: 'Select APK build type'
+        description: 'APK build type'
         required: true
         default: 'debug'
         type: choice
         options:
           - debug
           - release
-
-  push:
-    branches: [ develop, main ]
-  pull_request:
-    branches: [ develop, main ]
+      runnerType:
+        description: 'Runner to use'
+        required: true
+        default: 'github'
+        type: choice
+        options:
+          - github
+          - ubuntu
 
 jobs:
   build:
     name: Build Android APK
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event.inputs.runnerType == 'ubuntu' && 'brahim4Captiva' || 'ubuntu-latest' }}
     env:
       BUILD_TYPE: ${{ github.event.inputs.buildType || 'debug' }}
-
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Docker Login to pull private image
       - name: Docker Login
         run: echo "${{ secrets.DOCKERHUB_TOKEN_OR_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
-      # Pull your Docker image from Docker Hub
       - name: Pull Docker image
-        run: |
-          docker pull ehb2docker/react-native-android-jdk21:latest
+        run: docker pull ehb2docker/react-native-android-jdk21:latest
 
-      - name: Run build inside Docker container
+      - name: Build in Docker container
         run: |
           docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace ehb2docker/react-native-android-jdk21 /bin/bash -c "
             npm install &&
@@ -50,9 +49,8 @@ jobs:
             ./gradlew assemble${BUILD_TYPE^}
           "
 
-      # Upload APK artifact
-      - name: Upload APK artifact
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: app-${BUILD_TYPE^}.apk
-          path: android/app/build/outputs/apk/${BUILD_TYPE^}/app-${BUILD_TYPE^}*.apk
+          name: app-${{ env.BUILD_TYPE }}.apk
+          path: android/app/build/outputs/apk/${{ env.BUILD_TYPE }}/app-*.apk
