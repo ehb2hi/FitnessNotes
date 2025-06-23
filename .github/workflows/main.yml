@@ -26,6 +26,7 @@ jobs:
     runs-on: ${{ github.event.inputs.runnerType == 'ubuntu' && 'brahim4Captiva' || 'ubuntu-latest' }}
     env:
       BUILD_TYPE: ${{ github.event.inputs.buildType || 'debug' }}
+      PROJECT_PATH: /home/brahim/repos/FitnessNotes
 
     steps:
       - name: Checkout code
@@ -48,6 +49,18 @@ jobs:
             cd android &&
             ./gradlew assemble${BUILD_TYPE^}
           "
+      - name: Build APK on physical runner (native Ubuntu)
+        if: github.event.inputs.runnerType == 'ubuntu'
+        run: |
+          cd $PROJECT_PATH
+          rm -rf dist
+          npm install
+          npm run build
+          npx @capacitor/assets generate --android
+          npx cap add android || true
+          npx cap sync android
+          cd android
+          ./gradlew assemble${BUILD_TYPE^}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
