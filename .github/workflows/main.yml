@@ -23,7 +23,7 @@ on:
 jobs:
   build:
     name: Build Android APK
-    runs-on: ${{ github.event.inputs.runnerType == 'ubuntu' && 'brahim4Captiva || 'ubuntu-latest' }}
+    runs-on: ${{ github.event.inputs.runnerType == 'ubuntu' && 'brahim4Captiva' || 'ubuntu-latest' }}
     env:
       BUILD_TYPE: ${{ github.event.inputs.buildType || 'debug' }}
 
