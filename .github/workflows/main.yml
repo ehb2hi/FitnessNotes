@@ -28,6 +28,11 @@ jobs:
       BUILD_TYPE: ${{ github.event.inputs.buildType || 'debug' }}
 
     steps:
+      - name: Clean physical workspace
+        if: github.event.inputs.runnerType == 'ubuntu'
+        run: |
+          sudo rm -rf "${{ runner.workspace }}/FitnessNotes/FitnessNotes" || true
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -58,7 +63,7 @@ jobs:
           cd ${{ runner.workspace }}/FitnessNotes/FitnessNotes
           rm -rf dist
           npm install
-          npm run build
+          npm run build -- --no-cache
           npx @capacitor/assets generate --android
           npx cap add android || true
           npx cap sync android
