@@ -61,7 +61,7 @@ jobs:
       - name: Build on physical Ubuntu runner
         if: github.event.inputs.runnerType == 'ubuntu'
         run: |
-          cd ${{ runner.workspace }}/FitnessNotes/FitnessNotes
+          cd ${{ runner.workspace }}/FitnessNotes
           rm -rf dist
           npm install
           npm run build -- --no-cache
