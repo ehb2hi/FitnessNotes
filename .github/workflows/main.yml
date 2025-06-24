@@ -61,23 +61,24 @@ jobs:
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
             -e MYAPP_UPLOAD_STORE_FILE=android/release-key.jks \
-            -e KEYSTORE_PASSWORD="${{ secrets.KEYSTORE_PASSWORD }}" \
-            -e KEY_ALIAS="${{ secrets.KEY_ALIAS }}" \
-            -e KEY_PASSWORD="${{ secrets.KEY_PASSWORD }}" \
+            -e MYAPP_UPLOAD_STORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} \
+            -e MYAPP_UPLOAD_KEY_ALIAS=${{ secrets.KEY_ALIAS }} \
+            -e MYAPP_UPLOAD_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }} \
             ehb2docker/react-native-android-jdk21 /bin/bash -c "
+              echo '${{ secrets.KEYSTORE_BASE64 }}' | base64 --decode > android/release-key.jks &&
               npm install &&
               rm -rf dist .angular/cache &&
               npm run build &&
               npx @capacitor/assets generate --android &&
-              npx cap add android || true &&
               npx cap sync android &&
               cd android &&
               ./gradlew assemble${BUILD_TYPE^} \
-                -PMYAPP_UPLOAD_STORE_FILE=${MYAPP_UPLOAD_STORE_FILE} \
-                -PKEYSTORE_PASSWORD=${KEYSTORE_PASSWORD} \
-                -PKEY_ALIAS=${KEY_ALIAS} \
-                -PKEY_PASSWORD=${KEY_PASSWORD}
+                -PMYAPP_UPLOAD_STORE_FILE=android/release-key.jks \
+                -PMYAPP_UPLOAD_STORE_PASSWORD=\${MYAPP_UPLOAD_STORE_PASSWORD} \
+                -PMYAPP_UPLOAD_KEY_ALIAS=\${MYAPP_UPLOAD_KEY_ALIAS} \
+                -PMYAPP_UPLOAD_KEY_PASSWORD=\${MYAPP_UPLOAD_KEY_PASSWORD}
             "
+
 
       # 🛠 Build on physical Ubuntu runner
       - name: Build on physical Ubuntu runner
