@@ -60,7 +60,7 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/workspace \
             -w /workspace \
-            -e MYAPP_UPLOAD_STORE_FILE=="${{ secrets.MYAPP_UPLOAD_STORE_FILE }}" \
+            -e MYAPP_UPLOAD_STORE_FILE="${{ secrets.MYAPP_UPLOAD_STORE_FILE }}" \
             -e KEYSTORE_PASSWORD="${{ secrets.KEYSTORE_PASSWORD }}" \
             -e KEY_ALIAS="${{ secrets.KEY_ALIAS }}" \
             -e KEY_PASSWORD="${{ secrets.KEY_PASSWORD }}" \
