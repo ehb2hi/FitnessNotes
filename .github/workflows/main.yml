@@ -72,7 +72,7 @@ jobs:
               npx cap sync android &&
               cd android &&
               ./gradlew assemble${BUILD_TYPE^} \
-                -PMYAPP_UPLOAD_STORE_FILE=release-key.jks \
+                -PMYAPP_UPLOAD_STORE_FILE=${MYAPP_UPLOAD_STORE_FILE} \
                 -PKEYSTORE_PASSWORD=${KEYSTORE_PASSWORD} \
                 -PKEY_ALIAS=${KEY_ALIAS} \
                 -PKEY_PASSWORD=${KEY_PASSWORD}
@@ -91,7 +91,7 @@ jobs:
           npx cap sync android
           cd android
           ./gradlew assemble${BUILD_TYPE^} \
-            -PMYAPP_UPLOAD_STORE_FILE=release-key.jks \
+            -PMYAPP_UPLOAD_STORE_FILE=${MYAPP_UPLOAD_STORE_FILE}  \
             -PKEYSTORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }} \
             -PKEY_ALIAS=${{ secrets.KEY_ALIAS }} \
             -PKEY_PASSWORD=${{ secrets.KEY_PASSWORD }}
