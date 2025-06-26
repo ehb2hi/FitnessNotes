@@ -28,3 +28,9 @@
 -dontwarn com.google.errorprone.annotations.RestrictedApi
 -dontwarn javax.annotation.Nullable
 -dontwarn javax.annotation.concurrent.GuardedBy
+
+
+# Keep all SQLCipher classes + silence warnings
+-keep class net.sqlcipher.** { *; }
+-dontwarn net.sqlcipher.**
+
