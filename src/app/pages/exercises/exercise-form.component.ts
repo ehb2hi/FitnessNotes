@@ -6,7 +6,7 @@ import { WorkoutDatabaseService } from '../../services/workout-database.service'
 import { SetEntry, WorkoutEntry } from '../../models/workout-entry.model';
 import { ActivatedRoute, RouterModule, Router } from '@angular/router';
 import { App as CapacitorApp } from '@capacitor/app';
-import { ChangeDetectionStrategy } from '@angular/core';
+// import { ChangeDetectionStrategy } from '@angular/core';
 
 
 @Component({
@@ -14,8 +14,8 @@ import { ChangeDetectionStrategy } from '@angular/core';
   standalone: true,
   imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './exercise-form.component.html',
-  styleUrls: ['./exercise-form.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./exercise-form.component.scss']
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExerciseFormComponent implements OnInit, OnDestroy{
   exerciseName = '';
