@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy } from '@angular/core';
+
 
 @Component({
   selector: 'app-settings',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SettingsComponent implements OnInit {
   isDarkTheme = false;

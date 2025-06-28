@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: 'exercises/:categoryName', component: ExerciseListComponent },
   { path: 'exercise/:exerciseName', component: ExerciseFormComponent },
   { path: 'exercise-history/:exerciseName', component: HistoryComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'settings', component: SettingsComponent },
-  { path: 'history', component: HistoryComponent }
+  { path: 'about', loadComponent: () => import('./pages/about/about.component').then(m => m.AboutComponent)},
+  { path: 'settings', loadComponent: () => import('./pages/settings/settings.component').then(m => m.SettingsComponent)},
+  { path: 'history',   loadComponent: () => import('./pages/history/history.component').then(m => m.HistoryComponent)}
 ];

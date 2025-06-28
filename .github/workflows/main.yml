@@ -67,7 +67,7 @@ jobs:
             ehb2docker/react-native-android-jdk21 /bin/bash -c "
               echo '${{ secrets.KEYSTORE_BASE64 }}' | base64 --decode > android/release-key.jks &&
               npm install &&
-              npm run build &&
+              npm ng build --configuration production &&
               npx @capacitor/assets generate --android &&
               npx cap sync android &&
               cd android &&
@@ -87,7 +87,7 @@ jobs:
           cd ${{ runner.workspace }}/FitnessNotes
           rm -rf dist .angular/cache || true
           npm install
-          npm run build
+          npm ng build --configuration production
           npx @capacitor/assets generate --android
           npx cap add android || true
           npx cap sync android
