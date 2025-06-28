@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { WorkoutDatabaseService } from '../../services/workout-database.service';
 import { WorkoutEntry } from '../../models/workout-entry.model';
 import { ActivatedRoute } from '@angular/router';
-import { ChangeDetectionStrategy } from '@angular/core';
 
 
 @Component({
@@ -12,8 +11,7 @@ import { ChangeDetectionStrategy } from '@angular/core';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./history.component.scss']
 })
 export class HistoryComponent implements OnInit {
   workouts: WorkoutEntry[] = [];

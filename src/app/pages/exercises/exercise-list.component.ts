@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CATEGORIES } from '../../models/categories';
-import { ChangeDetectionStrategy } from '@angular/core';
 
 
 @Component({
@@ -11,7 +10,6 @@ import { ChangeDetectionStrategy } from '@angular/core';
   imports: [CommonModule, RouterModule],
   templateUrl: './exercise-list.component.html',
   styleUrls: ['./exercise-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ExerciseListComponent implements OnInit {
   categoryName = '';
