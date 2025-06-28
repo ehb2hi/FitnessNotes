@@ -20,7 +20,9 @@ export class ExerciseFormComponent implements OnInit, OnDestroy{
   machineNumber = '';
   private backHandler: any;
   sets: SetEntry[] = [{ weight: 0, reps: 0 }];
+  selectedUnit: 'kg' | 'lb' = 'kg';
 
+  
   constructor(
     private route: ActivatedRoute,
     // private workoutService: WorkoutService,
@@ -74,4 +76,30 @@ export class ExerciseFormComponent implements OnInit, OnDestroy{
     return this.exerciseName.toLowerCase().replace(/\s+/g, '-');
   }
 
+  convertKgToLb(kg: number): number {
+    return +(kg * 2.20462).toFixed(2);
+  }
+
+  convertLbToKg(lb: number): number {
+    return +(lb / 2.20462).toFixed(2);
+  }
+
+  onUnitChange(newUnit: 'kg' | 'lb'): void {
+    if (newUnit === this.selectedUnit) return;
+
+    // Convert all set weights
+    this.sets = this.sets.map(set => ({
+      ...set,
+      weight: newUnit === 'kg'
+        ? this.convertLbToKg(set.weight)
+        : this.convertKgToLb(set.weight)
+    }));
+
+    this.selectedUnit = newUnit;
+  }
+
+  onUnitToggle(checked: boolean): void {
+    // true  →  Lb | false → Kg
+    this.onUnitChange(checked ? 'lb' : 'kg');
+  }
 }

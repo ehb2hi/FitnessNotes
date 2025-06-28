@@ -95,7 +95,78 @@ button:hover {
   background-color: #0056b3;
 }
 
+/* INLINE ROW */
+.weight-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+
+  input[type='number'] {
+    flex: 1;
+  }
+
+  .unit-label {
+    width: 2.5rem;
+    text-align: center;
+    font-weight: 600;
+  }
+}
+
+/* SWITCH */
+.unit-switch {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  display: inline-block;
+}
+
+.unit-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.unit-switch .slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #ccc;
+  border-radius: 9999px;
+  transition: 0.3s;
+}
+
+.unit-switch .slider::before {
+  content: '';
+  position: absolute;
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
+  background: #fff;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.unit-switch input:checked + .slider {
+  background: #007bff;
+}
+
+.unit-switch input:checked + .slider::before {
+  transform: translateX(18px);
+}
+
 /* --- Dark-theme overrides --- */
+:host-context(.dark-theme) .unit-switch .slider {
+  background: #666;
+}
+:host-context(.dark-theme) .unit-switch input:checked + .slider {
+  background: #2196f3;
+}
+
+
 :host-context(.dark-theme) {
   .workout-container {
     background-color: #121212;
@@ -122,4 +193,17 @@ button:hover {
   button:hover {
     background-color: #0056b3;
   }
+}
+:host-context(.dark-theme) .unit-toggle {
+  background: #444;
+}
+:host-context(.dark-theme) .unit-toggle button {
+  color: #ccc;
+}
+:host-context(.dark-theme) .unit-toggle button:not(.active):hover {
+  background: #555;
+}
+:host-context(.dark-theme) .unit-toggle button.active {
+  background: #2196f3;
+  color: #fff;
 }

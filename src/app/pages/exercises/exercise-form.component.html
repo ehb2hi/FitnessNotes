@@ -11,11 +11,33 @@
 
     <div *ngFor="let set of sets; let i = index">
       <p><strong>Set {{ i + 1 }}</strong></p>
-      <label>Weight (kg):</label>
-      <input type="number" [(ngModel)]="set.weight" />
+
+      <!-- weight row with inline switch (INSIDE the loop) -->
+      <label>Weight:</label>
+      <div class="weight-row">
+        <input
+          type="number"
+          [(ngModel)]="set.weight"
+          [placeholder]="'Weight (' + selectedUnit + ')'"
+        />
+
+        <label class="unit-switch">
+          <input
+            type="checkbox"
+            [checked]="selectedUnit === 'lb'"
+            (change)="onUnitToggle(($any($event.target)).checked)"
+          />
+          <span class="slider"></span>
+        </label>
+
+        <span class="unit-label">{{ selectedUnit | uppercase }}</span>
+      </div>
+
+      <!-- reps stays the same -->
       <label>Reps:</label>
       <input type="number" [(ngModel)]="set.reps" />
     </div>
+
 
     <div class="button-row">
       <button (click)="addSet()">Add Set</button>
