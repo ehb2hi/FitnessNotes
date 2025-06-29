@@ -13,3 +13,27 @@ main.container {
   margin: 0 auto;
 }
 
+.shell {
+  height: 100vh; // needed so drawer spans screen
+}
+
+.title {
+  margin-left: 8px;
+  font-weight: 600;
+}
+
+.drawer {
+  width: 230px;
+}
+
+mat-nav-list {
+  padding-top: 8px;
+}
+
+a.active {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+:host-context(.dark-theme) a.active {
+  background: rgba(255, 255, 255, 0.12);
+}

@@ -12,10 +12,24 @@
   </ul>
 
   <div class="settings-item">
-    <span>🌓 Dark Theme</span>
+    <span>🖥️ Follow system theme</span>
     <label class="switch">
-      <input type="checkbox" [checked]="isDarkTheme" (change)="toggleTheme()">
+      <input type="checkbox"
+            [checked]="followSystem"
+            (change)="toggleFollowSystem()">
       <span class="slider round"></span>
     </label>
   </div>
+
+  <div class="settings-item">
+    <span>🌓 Dark Theme</span>
+    <label class="switch">
+      <input type="checkbox"
+            [checked]="isDarkTheme"
+            (change)="toggleTheme()"
+            [disabled]="followSystem">
+      <span class="slider round"></span>
+    </label>
+  </div>
+
 </div>

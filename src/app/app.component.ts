@@ -1,12 +1,30 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
-import { NavbarComponent } from './shared/navbar/navbar.component';
+import { 
+  RouterOutlet, 
+  Router,   
+  RouterLink,
+  RouterLinkActive    
+} from '@angular/router';
 import { App as CapacitorApp } from '@capacitor/app';
-import { TopbarComponent } from './shared/topbar.component';  
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TopbarComponent],
+  imports: [
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    MatSidenavModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    MatButtonModule
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
