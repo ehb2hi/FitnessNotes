@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CATEGORIES } from '../../models/categories';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @Component({
   selector: 'app-exercise-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, MatRippleModule],
   templateUrl: './exercise-list.component.html',
   styleUrls: ['./exercise-list.component.scss'],
 })

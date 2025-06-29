@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @Component({
@@ -23,6 +24,7 @@ import { MatListModule } from '@angular/material/list';
     MatToolbarModule,
     MatIconModule,
     MatListModule,
+    MatRippleModule,
     MatButtonModule
   ],
   templateUrl: './app.component.html',

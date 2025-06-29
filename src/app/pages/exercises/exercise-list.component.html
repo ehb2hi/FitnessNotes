@@ -5,7 +5,8 @@
     class="exercise-card"
     *ngFor="let exercise of exercises"
     [routerLink]="['/exercise', formatExerciseLink(exercise)]"
-  >
+    matRipple                       
+    [matRippleColor]="'rgba(0,0,0,0.1)'" >
     <h3>{{ exercise }}</h3>
   </div>
 </div>
